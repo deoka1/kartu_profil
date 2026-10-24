@@ -1,11 +1,14 @@
-# Kartu Identitas Digital Mahasiswa
+# minggu7_kartu_profil (Minggu 07)
 
-Tugas Pemrograman Mobile, Minggu 05.
+Kartu identitas digital mahasiswa dengan package intl dan google_fonts.
 
-## Cara menjalankan
-1. Pastikan Flutter terpasang: `flutter --version`
-2. Buka terminal di folder ini, lalu jalankan:
-   flutter create .
-   flutter pub get
-   flutter run
-3. Ganti `assets/foto.jpg` dengan foto Anda (nama berkas tetap `foto.jpg`).
+## Menjalankan
+1. flutter create .
+2. flutter pub get
+3. flutter run -d chrome
+
+## Android
+Tambahkan baris ini di android/app/src/main/AndroidManifest.xml, sebelum <application:
+<uses-permission android:name="android.permission.INTERNET"/>
+
+Ganti assets/foto.jpg dengan foto Anda (nama berkas tetap foto.jpg).

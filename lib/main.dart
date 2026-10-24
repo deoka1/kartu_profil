@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Memuat data tanggal bahasa Indonesia untuk package intl.
+  await initializeDateFormatting('id_ID');
   runApp(const AplikasiKartuIdentitas());
 }
 
@@ -10,12 +16,17 @@ class AplikasiKartuIdentitas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dasar = ThemeData(
+      colorSchemeSeed: const Color(0xFF0B6B45),
+      useMaterial3: true,
+    );
+
     return MaterialApp(
       title: 'Kartu Identitas Mahasiswa',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorSchemeSeed: const Color(0xFF0B6B45),
-        useMaterial3: true,
+      // Font Poppins dari package google_fonts untuk seluruh aplikasi.
+      theme: dasar.copyWith(
+        textTheme: GoogleFonts.poppinsTextTheme(dasar.textTheme),
       ),
       home: const HalamanKartu(),
     );
@@ -133,6 +144,10 @@ class _KartuMahasiswa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Format tanggal bahasa Indonesia memakai package intl.
+    final tanggalCetak =
+        DateFormat('EEEE, d MMMM y', 'id_ID').format(DateTime.now());
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       decoration: BoxDecoration(
@@ -280,6 +295,25 @@ class _KartuMahasiswa extends StatelessWidget {
                   ikon: Icons.code,
                   label: 'GitHub',
                   nilai: 'github.com/deoka1',
+                ),
+              ],
+            ),
+          ),
+
+          Container(height: 1, color: palet.garis),
+
+          // Bagian tanggal cetak kartu
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Row(
+              children: [
+                Icon(Icons.print_outlined, size: 16, color: palet.teksSekunder),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Dicetak: $tanggalCetak',
+                    style: TextStyle(color: palet.teksSekunder, fontSize: 12),
+                  ),
                 ),
               ],
             ),
